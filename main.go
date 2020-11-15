@@ -19,13 +19,12 @@ import (
 	"github.com/navjordj/password_manager/cmd"
 	"github.com/navjordj/password_manager/database"
 
-	"fmt"
+	_ "fmt"
 
 )
 
 func main() {
 	cmd.Execute()
-	db := database.NewDatabase("test.db")
-	fmt.Println(db)
-	database.Insert("abc123", "www.vg.no", *db)
+	database.NewDatabase("test.db")
+
 }

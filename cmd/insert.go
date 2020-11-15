@@ -22,30 +22,41 @@ import (
 	"github.com/spf13/cobra"
 
 	_ "github.com/mattn/go-sqlite3"
-	"database/sql"	
+	"bufio"
+	"os"
+
+	"github.com/navjordj/password_manager/database"
 )
 
 // insertCmd represents the insert command
-var insertCmd = &cobra.Command{
+var insertPassword = &cobra.Command{
 	Use:   "insert",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+and usage of using syour command. For example:
 
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("insert called")
+
+		reader := bufio.NewReader(os.Stdin)
+
+		fmt.Print("Website: ")
+		website, _ := reader.ReadString('\n')
+
+
+		fmt.Print("Password: ")
+		password, _ := reader.ReadString('\n')
+
+		res := database.Insert(password, website, "test.db")
+		fmt.Println(res)
+		
 	},
 }
 
 func init() {
-	rootCmd.AddCommand(insertCmd)
-
-
-	database := initDB("bogo.db")
-	fmt.Println(database)
+	rootCmd.AddCommand(insertPassword)
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
@@ -57,12 +68,3 @@ func init() {
 	// insertCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-
-func initDB(db_name string) *sql.DB  {
-	database, _ := sql.Open("sqlite3", db_name)
-
-	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS passwords (id INTEGER PRIMARY KEY, password TEXT)")
-	statement.Exec()
-
-	return database
-}
