@@ -16,9 +16,13 @@ limitations under the License.
 package cmd
 
 import (
+
 	"fmt"
 
 	"github.com/spf13/cobra"
+
+	_ "github.com/mattn/go-sqlite3"
+	"database/sql"	
 )
 
 // insertCmd represents the insert command
@@ -39,6 +43,9 @@ to quickly create a Cobra application.`,
 func init() {
 	rootCmd.AddCommand(insertCmd)
 
+
+	database := initDB("bogo.db")
+	fmt.Println(database)
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
@@ -48,4 +55,14 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// insertCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+}
+
+
+func initDB(db_name string) *sql.DB  {
+	database, _ := sql.Open("sqlite3", db_name)
+
+	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS passwords (id INTEGER PRIMARY KEY, password TEXT)")
+	statement.Exec()
+
+	return database
 }
