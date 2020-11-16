@@ -1,4 +1,5 @@
 # Hello
 
-
- - [ ] 2FA
+## TODO
+ - [ ] Generer innsatt passord random (insert.go)
+ - [ ] Hente ut passord fra databasen og decrypte
