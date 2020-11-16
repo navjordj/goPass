@@ -1,9 +1,10 @@
 package database
 
 import (
-	_"fmt"
+	"fmt"
 	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
+	_ "reflect"
 	
 )
 /*
@@ -26,7 +27,24 @@ func Insert(password string, website string, db_name string) int {
 
 	db, _ := sql.Open("sqlite3", db_name)
 
-	statement, _ := db.Prepare("INSERT INTO passwords (password, website) VALUES (?, ?)")
-	statement.Exec(password, website)
+	statement, _ := db.Prepare("SELECT website FROM passwords")
+	rows, _ := statement.Query()
+	hva, _ := rows.ColumnTypes()
+	fmt.Println(hva)
+
+	var website_res string
+
+	for rows.Next() {
+		rows.Scan(&website_res)
+
+		if (website_res == website) {
+			return -1
+		} 
+
+	}
+
+
+	statement2, _ := db.Prepare("INSERT INTO passwords (password, website) VALUES (?, ?)")
+	statement2.Exec(password, website)
 	return 1
 }

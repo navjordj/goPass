@@ -26,6 +26,7 @@ import (
 	"os"
 
 	"github.com/navjordj/password_manager/database"
+	"strings"
 )
 
 // insertCmd represents the insert command
@@ -50,10 +51,15 @@ to quickly create a Cobra application.`,
 		password, _ := reader.ReadString('\n')
 
 		res := database.Insert(password, website, "test.db")
-		fmt.Println(res)
+		if (res == 1) {
+			fmt.Println(fmt.Sprintf("%s is now inserted", strings.TrimSuffix(website, "\n")))
+		} else {
+			fmt.Println(fmt.Sprintf("%s is already in the password manager", strings.TrimSuffix(website, "\n")))
+		}
 		
 	},
 }
+
 
 func init() {
 	rootCmd.AddCommand(insertPassword)
