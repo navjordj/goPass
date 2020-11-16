@@ -16,17 +16,21 @@ limitations under the License.
 package cmd
 
 import (
-
 	"fmt"
 
 	"github.com/spf13/cobra"
 
-	_ "github.com/mattn/go-sqlite3"
 	"bufio"
 	"os"
 
-	"github.com/navjordj/password_manager/database"
+	_ "github.com/mattn/go-sqlite3"
+
 	"strings"
+
+	"github.com/navjordj/password_manager/crypto"
+	"github.com/navjordj/password_manager/database"
+
+	"golang.org/x/crypto/ssh/terminal"
 )
 
 // insertCmd represents the insert command
@@ -46,20 +50,25 @@ to quickly create a Cobra application.`,
 		fmt.Print("Website: ")
 		website, _ := reader.ReadString('\n')
 
+		fmt.Print("Enter Password: ")
+		userPassword, _ := terminal.ReadPassword(0)
 
-		fmt.Print("Password: ")
-		password, _ := reader.ReadString('\n')
+		toEncrypt := []byte("Dette er passordet")
 
-		res := database.Insert(password, website, "test.db")
-		if (res == 1) {
+		passwordEncrypted, _ := crypto.Encrypt(userPassword, toEncrypt)
+
+		res := database.Insert(string(passwordEncrypted), website, "test.db")
+		if res == 1 {
 			fmt.Println(fmt.Sprintf("%s is now inserted", strings.TrimSuffix(website, "\n")))
 		} else {
 			fmt.Println(fmt.Sprintf("%s is already in the password manager", strings.TrimSuffix(website, "\n")))
 		}
-		
+
+		//password_decrypted, _ := crypto.Decrypt([]byte("abc123"), password_encrypted)
+		//fmt.Println(string(password_decrypted))
+
 	},
 }
-
 
 func init() {
 	rootCmd.AddCommand(insertPassword)
@@ -73,4 +82,3 @@ func init() {
 	// is called directly, e.g.:
 	// insertCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
-
