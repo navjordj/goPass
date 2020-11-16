@@ -1,5 +1,6 @@
 // scrypt.go
-package main
+package crypto
+
 import (
     "crypto/aes"
     "crypto/cipher"
