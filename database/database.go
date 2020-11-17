@@ -27,24 +27,26 @@ func Insert(password string, website string, db_name string) int {
 
 	db, _ := sql.Open("sqlite3", db_name)
 
-	statement, _ := db.Prepare("SELECT website FROM passwords")
-	rows, _ := statement.Query()
-	hva, _ := rows.ColumnTypes()
-	fmt.Println(hva)
+	res := CheckInDatabase(website, db)
 
-	var website_res string
-
-	for rows.Next() {
-		rows.Scan(&website_res)
-
-		if (website_res == website) {
-			return -1
-		} 
-
+	if (res == true) {
+		fmt.Println("Wesite already in DB")
+		return -1
+	} else {
+		statement2, _ := db.Prepare("INSERT INTO passwords (password, website) VALUES (?, ?)")
+		statement2.Exec(password, website)
+		return 1
 	}
+	
+}
 
+func Get(website string, db *sql.DB) string {
 
-	statement2, _ := db.Prepare("INSERT INTO passwords (password, website) VALUES (?, ?)")
-	statement2.Exec(password, website)
-	return 1
+	rows, _ := db.Query("SELECT password from passwords WHERE website = ?", website)
+
+	var password string
+	for rows.Next() {
+		rows.Scan(&password)
+	}
+	return password
 }
