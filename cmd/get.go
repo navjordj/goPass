@@ -18,8 +18,8 @@ package cmd
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"os"
+	"strings"
 
 	"github.com/navjordj/password_manager/crypto"
 	"github.com/navjordj/password_manager/database"
@@ -50,19 +50,32 @@ to quickly create a Cobra application.`,
 		fmt.Print("Website: ")
 		website, _ := reader.ReadString('\n')
 
-		fmt.Print("Enter your Password: ")
-		userPassword, _ := terminal.ReadPassword(0)
-
 		if database.CheckInDatabase(website, db) == true {
 			res := database.Get(website, db)
-			decrypted, err := crypto.Decrypt([]byte(userPassword), []byte(res))
 
-			if err != nil {
-				log.Fatal(err)
+			var decrypted string
+			for {
+				fmt.Print("Enter your Password: ")
+				userPassword, _ := terminal.ReadPassword(0)
+
+				decrypted, _ := crypto.Decrypt([]byte(userPassword), []byte(res))
+
+				if decrypted != nil {
+					outString := fmt.Sprintf("\nYour password at %s is: '%s'", strings.TrimSuffix(website, "\n"), string(decrypted))
+					fmt.Println(outString)
+					break
+				} else {
+					fmt.Println("Wrong password")
+				}
 			}
+
+			/*if err != nil {
+				fmt.Println(decrypted)
+				log.Fatal(err)
+			}*/
 			fmt.Println(string(decrypted))
 		} else {
-
+			fmt.Println(fmt.Sprintf("%s is not in the database", strings.TrimSuffix(website, "\n")))
 		}
 	},
 }

@@ -30,7 +30,7 @@ func Insert(password string, website string, db_name string) int {
 	res := CheckInDatabase(website, db)
 
 	if (res == true) {
-		fmt.Println("Wesite already in DB")
+		fmt.Println("\nWebsite already in DB")
 		return -1
 	} else {
 		statement2, _ := db.Prepare("INSERT INTO passwords (password, website) VALUES (?, ?)")
