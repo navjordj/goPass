@@ -1,5 +1,5 @@
 # Hello
 
 ## TODO
- - [ ] Generer innsatt passord random (insert.go)
- - [ ] Hente ut passord fra databasen og decrypte
+ - [X] Generer innsatt passord random (insert.go)
+ - [X] Hente ut passord fra databasen og decrypte
