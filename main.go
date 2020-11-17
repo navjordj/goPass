@@ -18,13 +18,10 @@ package main
 import (
 	"github.com/navjordj/password_manager/cmd"
 	"github.com/navjordj/password_manager/database"
-
-	_ "fmt"
-
 )
 
 func main() {
-	cmd.Execute()
 	database.NewDatabase("test.db")
+	cmd.Execute()
 
 }
