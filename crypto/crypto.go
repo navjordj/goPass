@@ -6,12 +6,8 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	_ "crypto/sha256" // trengs ikke?
-	"encoding/hex"
-	"fmt"
-	"log"
 
 	"golang.org/x/crypto/scrypt"
-	"golang.org/x/crypto/ssh/terminal"
 )
 
 // https://bruinsslot.jp/post/golang-crypto, https://itnext.io/encrypt-data-with-a-password-in-go-b5366384e291
@@ -75,25 +71,4 @@ func DeriveKey(password, salt []byte) ([]byte, []byte, error) {
 		return nil, nil, err
 	}
 	return key, salt, nil
-}
-
-func main() {
-	// password := []byte("mysecretpassword")
-	fmt.Print("Enter Password: ")
-	password, err := terminal.ReadPassword(0)
-	fmt.Println()
-
-	data := []byte("our super secret text")
-
-	ciphertext, err := Encrypt(password, data)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("ciphertext: %s\n", hex.EncodeToString(ciphertext))
-
-	plaintext, err := Decrypt(password, ciphertext)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("plaintext: %s\n", plaintext)
 }
