@@ -49,20 +49,19 @@ to quickly create a Cobra application.`,
 
 		reader := bufio.NewReader(os.Stdin)
 
-		randomPassword := randomPassword(30)
-		// fmt.Println(randomPassword)
-
 		fmt.Print("Website: ")
 		website, _ := reader.ReadString('\n')
 
-		fmt.Print("Enter Password: ")
+		fmt.Print("Enter your Password: ")
 		userPassword, _ := terminal.ReadPassword(0)
+
+		randomPassword := randomPassword(30)
 
 		passwordEncrypted, _ := crypto.Encrypt(userPassword, []byte(randomPassword))
 
 		res := database.Insert(string(passwordEncrypted), website, "test.db")
 		if res == 1 {
-			fmt.Println(fmt.Sprintf("%s is now inserted", strings.TrimSuffix(website, "\n")))
+			fmt.Println(fmt.Sprintf("\n %s is now inserted. Your password at %s is %s ", strings.TrimSuffix(website, "\n"), strings.TrimSuffix(website, "\n"), randomPassword))
 		} else {
 			fmt.Println(fmt.Sprintf("%s is already in the password manager", strings.TrimSuffix(website, "\n")))
 		}
