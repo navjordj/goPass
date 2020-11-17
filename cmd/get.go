@@ -21,6 +21,8 @@ import (
 	"os"
 	"strings"
 
+	"github.com/atotto/clipboard"
+
 	"github.com/navjordj/password_manager/crypto"
 	"github.com/navjordj/password_manager/database"
 	"github.com/spf13/cobra"
@@ -43,26 +45,29 @@ to quickly create a Cobra application.`,
 
 		db, _ := sql.Open("sqlite3", "test.db")
 
-		fmt.Println("get called")
-
 		reader := bufio.NewReader(os.Stdin)
 
 		fmt.Print("Website: ")
 		website, _ := reader.ReadString('\n')
 
 		if database.CheckInDatabase(website, db) == true {
-			res := database.Get(website, db)
+			pas, email := database.Get(website, db)
 
 			var decrypted string
 			for {
 				fmt.Print("Enter your Password: ")
 				userPassword, _ := terminal.ReadPassword(0)
 
-				decrypted, _ := crypto.Decrypt([]byte(userPassword), []byte(res))
+				decrypted, _ := crypto.Decrypt([]byte(userPassword), []byte(pas))
 
 				if decrypted != nil {
-					outString := fmt.Sprintf("\nYour password at %s is: '%s'", strings.TrimSuffix(website, "\n"), string(decrypted))
+					outString := fmt.Sprintf("\nemail: %s, password: '%s'", strings.TrimSuffix(email, "\n"), string(decrypted))
 					fmt.Println(outString)
+					err := clipboard.WriteAll(string(decrypted))
+
+					if err != nil {
+						// log.Fatal(err)
+					}
 					break
 				} else {
 					fmt.Println("Wrong password")

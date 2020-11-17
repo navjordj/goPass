@@ -14,3 +14,7 @@
  - [ ] Droppe sqlite for postgres
  - [ ] Skrive passord til clipboard (https://godoc.org/github.com/atotto/clipboard) 
  - [ ] Fjerne cobratekst
+ - [ ] Tester
+
+
+xsel

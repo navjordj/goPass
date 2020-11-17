@@ -40,13 +40,15 @@ func Insert(password string, email string, website string, db_name string) int {
 	
 }
 
-func Get(website string, db *sql.DB) string {
+func Get(website string, db *sql.DB) (string, string) {
 
-	rows, _ := db.Query("SELECT password from passwords WHERE website = ?", website)
-
+	rows, _ := db.Query("SELECT password, email from passwords WHERE website = ?", website)
 	var password string
+	var email string
+
 	for rows.Next() {
-		rows.Scan(&password)
+		rows.Scan(&password, &email)
 	}
-	return password
+
+	return password, email
 }
