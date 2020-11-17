@@ -52,6 +52,9 @@ to quickly create a Cobra application.`,
 		fmt.Print("Website: ")
 		website, _ := reader.ReadString('\n')
 
+		fmt.Print("email: ")
+		email, _ := reader.ReadString('\n')
+
 		fmt.Print("Enter your Password: ")
 		userPassword, _ := terminal.ReadPassword(0)
 
@@ -59,7 +62,7 @@ to quickly create a Cobra application.`,
 
 		passwordEncrypted, _ := crypto.Encrypt(userPassword, []byte(randomPassword))
 
-		res := database.Insert(string(passwordEncrypted), website, "test.db")
+		res := database.Insert(string(passwordEncrypted), email, website, "test.db")
 		if res == 1 {
 			fmt.Println(fmt.Sprintf("\n %s is now inserted. Your password at %s is %s ", strings.TrimSuffix(website, "\n"), strings.TrimSuffix(website, "\n"), randomPassword))
 		} else {

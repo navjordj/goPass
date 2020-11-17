@@ -17,13 +17,13 @@ func NewDatabase(name string) { //**sql.DB {
 
 	db, _ := sql.Open("sqlite3", name)
 
-	statement, _ := db.Prepare("CREATE TABLE IF NOT EXISTS passwords (id INTEGER PRIMARY KEY, password Text, website Text)")
+	statement, _ := db.Prepare("CREATE TABLE IF NOT EXISTS passwords (id INTEGER PRIMARY KEY, password Text, email Text, website Text)")
 	statement.Exec()
 
 	//return &db
 }
 
-func Insert(password string, website string, db_name string) int {
+func Insert(password string, email string, website string, db_name string) int {
 
 	db, _ := sql.Open("sqlite3", db_name)
 
@@ -33,8 +33,8 @@ func Insert(password string, website string, db_name string) int {
 		fmt.Println("\nWebsite already in DB")
 		return -1
 	} else {
-		statement2, _ := db.Prepare("INSERT INTO passwords (password, website) VALUES (?, ?)")
-		statement2.Exec(password, website)
+		statement2, _ := db.Prepare("INSERT INTO passwords (password, email, website) VALUES (?, ?, ?)")
+		statement2.Exec(password, email, website)
 		return 1
 	}
 	
