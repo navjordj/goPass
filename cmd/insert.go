@@ -21,6 +21,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"bufio"
+	"log"
 	"os"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -30,6 +31,7 @@ import (
 	"github.com/navjordj/password_manager/crypto"
 	"github.com/navjordj/password_manager/database"
 
+	"github.com/sethvargo/go-password/password"
 	"golang.org/x/crypto/ssh/terminal"
 )
 
@@ -47,15 +49,16 @@ to quickly create a Cobra application.`,
 
 		reader := bufio.NewReader(os.Stdin)
 
+		randomPassword := randomPassword(30)
+		// fmt.Println(randomPassword)
+
 		fmt.Print("Website: ")
 		website, _ := reader.ReadString('\n')
 
 		fmt.Print("Enter Password: ")
 		userPassword, _ := terminal.ReadPassword(0)
 
-		toEncrypt := []byte("Dette er passordet")
-
-		passwordEncrypted, _ := crypto.Encrypt(userPassword, toEncrypt)
+		passwordEncrypted, _ := crypto.Encrypt(userPassword, []byte(randomPassword))
 
 		res := database.Insert(string(passwordEncrypted), website, "test.db")
 		if res == 1 {
@@ -68,6 +71,16 @@ to quickly create a Cobra application.`,
 		//fmt.Println(string(password_decrypted))
 
 	},
+}
+
+func randomPassword(len int) string {
+	res, err := password.Generate(len, 10, 10, true, true)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return res
+
 }
 
 func init() {
