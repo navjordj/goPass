@@ -10,6 +10,7 @@ func CheckInDatabase(website string, db *sql.DB) bool {
 
 	var websiteRes string
 
+	defer rows.Close()
 	for rows.Next() {
 		rows.Scan(&websiteRes)
 

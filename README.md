@@ -10,7 +10,7 @@
  - [ ] Samme passord for alt (masterpassord)
  - [ ] La bruker bestemme passordinstillinger (stor bokstav, lengde osv.)
  - [X] Legge til mail
- - [ ] Mulighet til å oppdatere passord
+ - [X] Mulighet til å oppdatere passord
  - [ ] Slette passord i databasen
  - [ ] Droppe sqlite for postgres
  - [ ] Skrive passord til clipboard (https://godoc.org/github.com/atotto/clipboard) 

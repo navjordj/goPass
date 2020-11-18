@@ -1,12 +1,14 @@
 package database
 
 import (
-	"fmt"
 	"database/sql"
-	_ "github.com/mattn/go-sqlite3"
+	"fmt"
+	"log"
 	_ "reflect"
-	
+
+	_ "github.com/mattn/go-sqlite3"
 )
+
 /*
 type database struct {
 	s string
@@ -29,7 +31,7 @@ func Insert(password string, email string, website string, db_name string) int {
 
 	res := CheckInDatabase(website, db)
 
-	if (res == true) {
+	if res == true {
 		fmt.Println("\nWebsite already in DB")
 		return -1
 	} else {
@@ -37,7 +39,6 @@ func Insert(password string, email string, website string, db_name string) int {
 		statement2.Exec(password, email, website)
 		return 1
 	}
-	
 }
 
 func Get(website string, db *sql.DB) (string, string) {
@@ -46,9 +47,30 @@ func Get(website string, db *sql.DB) (string, string) {
 	var password string
 	var email string
 
+	defer rows.Close()
 	for rows.Next() {
 		rows.Scan(&password, &email)
 	}
 
 	return password, email
+}
+
+func Update(website string, newPassword string, db_name string) bool {
+
+	db, _ := sql.Open("sqlite3", db_name)
+
+	inDatabase := CheckInDatabase(website, db)
+
+	if inDatabase {
+		_, err := db.Exec("UPDATE passwords SET password = (?) WHERE website = (?)", newPassword, website)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		return true
+	} else {
+		fmt.Println("Ikke i databasen")
+		return false
+	}
 }
