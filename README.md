@@ -11,6 +11,7 @@
  - [ ] La bruker bestemme passordinstillinger (stor bokstav, lengde osv.)
  - [X] Legge til mail
  - [X] Mulighet til å oppdatere passord
+ - [ ] Mulighet til å oppdatere email
  - [ ] Slette passord i databasen
  - [ ] Droppe sqlite for postgres
  - [ ] Skrive passord til clipboard (https://godoc.org/github.com/atotto/clipboard) 
@@ -18,6 +19,4 @@
  - [ ] Tester
  - [ ] Eksporter all data
  - [ ] Importer data
-
-
-xsel
+ - [ ] Error handling

@@ -10,9 +10,6 @@ import (
 	"golang.org/x/crypto/scrypt"
 )
 
-// https://bruinsslot.jp/post/golang-crypto, https://itnext.io/encrypt-data-with-a-password-in-go-b5366384e291
-
-// Encrypt osv
 func Encrypt(key, data []byte) ([]byte, error) {
 	key, salt, err := DeriveKey(key, nil)
 	if err != nil {
@@ -35,7 +32,6 @@ func Encrypt(key, data []byte) ([]byte, error) {
 	return ciphertext, nil
 }
 
-// Decrypt osv
 func Decrypt(key, data []byte) ([]byte, error) {
 	salt, data := data[len(data)-32:], data[:len(data)-32]
 	key, _, err := DeriveKey(key, salt)
@@ -58,7 +54,6 @@ func Decrypt(key, data []byte) ([]byte, error) {
 	return plaintext, nil
 }
 
-//DeriveKey osv
 func DeriveKey(password, salt []byte) ([]byte, []byte, error) {
 	if salt == nil {
 		salt = make([]byte, 32)
