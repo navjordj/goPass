@@ -23,8 +23,8 @@ import (
 
 	"github.com/atotto/clipboard"
 
-	"github.com/navjordj/password_manager/crypto"
-	"github.com/navjordj/password_manager/database"
+	"github.com/navjordj/goPass/crypto"
+	"github.com/navjordj/goPass/database"
 	"github.com/spf13/cobra"
 	"golang.org/x/crypto/ssh/terminal"
 

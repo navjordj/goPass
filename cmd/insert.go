@@ -28,8 +28,8 @@ import (
 
 	"strings"
 
-	"github.com/navjordj/password_manager/crypto"
-	"github.com/navjordj/password_manager/database"
+	"github.com/navjordj/goPass/crypto"
+	"github.com/navjordj/goPass/database"
 
 	"github.com/sethvargo/go-password/password"
 	"golang.org/x/crypto/ssh/terminal"

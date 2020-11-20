@@ -16,8 +16,8 @@ limitations under the License.
 package main
 
 import (
-	"github.com/navjordj/password_manager/cmd"
-	"github.com/navjordj/password_manager/database"
+	"github.com/navjordj/goPass/cmd"
+	"github.com/navjordj/goPass/database"
 )
 
 func main() {

@@ -8,7 +8,7 @@ Simple CLI password manager written in GO
  - [X] Hente ut passord fra databasen og decrypte
  - [X] Teste i praksis
  - [ ] Skrive en README 
- - [ ] Finne et heftig navn
+ - [X] Finne et heftig navn
  - [ ] Samme passord for alt (masterpassord)
  - [ ] La bruker bestemme passordinstillinger (stor bokstav, lengde osv.)
  - [X] Legge til mail
