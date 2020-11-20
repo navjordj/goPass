@@ -1,4 +1,6 @@
-# CLI Password Manager
+# GoPass
+
+Simple CLI password manager written in GO
 
 
 ## Ågjøre
