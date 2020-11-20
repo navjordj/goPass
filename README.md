@@ -3,6 +3,33 @@
 Simple CLI password manager written in GO
 
 
+## Installation
+```console
+git clone https://github.com/navjordj/goPass
+cd goPass
+go install
+```
+
+# Usage
+
+
+## Insert 
+```console
+goPass insert
+```
+
+## Get Password 
+```console
+goPass get
+```
+
+## Update Password 
+```console
+goPass update
+```
+
+
+
 ## Ågjøre
  - [X] Generer innsatt passord random (insert.go)
  - [X] Hente ut passord fra databasen og decrypte
