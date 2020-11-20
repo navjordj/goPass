@@ -1,6 +1,6 @@
 # GoPass
 
-Simple CLI password manager written in GO
+Simple CLI password manager written in GO. Saves AES256 encrypted passwords in a database locally.
 
 
 ## Installation
@@ -10,20 +10,20 @@ cd goPass
 go install
 ```
 
-# Usage
+## Usage
 
 
-## Insert 
+### Insert 
 ```console
 goPass insert
 ```
 
-## Get Password 
+### Get Password 
 ```console
 goPass get
 ```
 
-## Update Password 
+### Update Password 
 ```console
 goPass update
 ```
@@ -34,7 +34,7 @@ goPass update
  - [X] Generer innsatt passord random (insert.go)
  - [X] Hente ut passord fra databasen og decrypte
  - [X] Teste i praksis
- - [ ] Skrive en README 
+ - [X] Skrive en README 
  - [X] Finne et heftig navn
  - [ ] Samme passord for alt (masterpassord)
  - [ ] La bruker bestemme passordinstillinger (stor bokstav, lengde osv.)
